@@ -1,0 +1,40 @@
+version: '2.2'
+
+services:
+  centos:
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    build:
+      context: ./centos
+    image: aboutphp/centos7
+
+  php70:
+    volumes_from:
+      - centos
+    volumes:
+      - ./../website:/var/www/website/
+    build:
+      context: ./php
+      args:
+        - PHPVERSION=73
+    image: aboutphp/php73:latest
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 8090:80
+    hostname: local.about-php.org
+    networks:
+      aboutphp_app_net:
+        ipv4_address: 172.16.239.2
+
+
+networks:
+  aboutphp_app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.239.0/24
+          gateway: 172.16.239.1
