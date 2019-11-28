@@ -8,11 +8,11 @@ services:
       context: ./centos
     image: aboutphp/centos7
 
-  php70:
+  php:
     volumes_from:
       - centos
     volumes:
-      - ./../website:/var/www/website/
+      - ./../Website:/var/www/website/
     build:
       context: ./php
       args:
