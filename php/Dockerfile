@@ -6,7 +6,7 @@ RUN yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm \
     \
      && yum-config-manager -y --enable remi-php${PHPVERSION} \
      \
-       && yum -y install php httpd \
+       && yum -y install php php-xml php-mbstraing httpd \
         \
          && systemctl enable httpd.service
 
